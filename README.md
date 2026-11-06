@@ -41,16 +41,27 @@ Estimates narration time from a script file at 3.3 words per second, the rate us
 python duration_estimator.py example_input.txt
 ```
 
+### 5. script_symbols_checker.py — Hindi script symbols checker
+
+Checks a Hindi narration script for banned symbols — comma (,), hyphen (-), slash (/) and underscore (_) — which make voiceover sound broken and robotic. Reports how many of each symbol were found and the line numbers where they appear.
+
+```bash
+python script_symbols_checker.py script.txt
+```
+
+Exit code is 0 when the script is clean and 1 when banned symbols are found.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
 - `title_checker.py` — the title checker
 - `hashtag_counter.py` — the hashtag counter
 - `duration_estimator.py` — the duration estimator
+- `script_symbols_checker.py` — the symbols checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
 
 ## Status
 
-Just started — one tool, working. More small tools may be added later.
+Active — small tools are added regularly, each one tested and working.
