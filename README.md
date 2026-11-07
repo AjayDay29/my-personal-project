@@ -51,6 +51,17 @@ python script_symbols_checker.py script.txt
 
 Exit code is 0 when the script is clean and 1 when banned symbols are found.
 
+### 6. script_splitter.py — Hindi narration script splitter
+
+Splits a long Hindi script into sequential parts of about 2500 words each, at sentence boundaries, so no sentence is ever cut in half. Each part is saved as its own file and the word count and estimated narration time of every part is printed.
+
+```bash
+python script_splitter.py script.txt
+python script_splitter.py script.txt --words 2000 --out-dir parts/
+```
+
+Estimated time uses 3.3 words per second, the same rate as duration_estimator.py.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -58,6 +69,7 @@ Exit code is 0 when the script is clean and 1 when banned symbols are found.
 - `hashtag_counter.py` — the hashtag counter
 - `duration_estimator.py` — the duration estimator
 - `script_symbols_checker.py` — the symbols checker
+- `script_splitter.py` — the script splitter
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
