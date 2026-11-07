@@ -62,6 +62,24 @@ python script_splitter.py script.txt --words 2000 --out-dir parts/
 
 Estimated time uses 3.3 words per second, the same rate as duration_estimator.py.
 
+### 7. description_checker.py — YouTube description checker
+
+Checks a video description against the channel's locked description formula before it goes live:
+
+- At most 15 hashtags — YouTube ignores everything beyond 15.
+- Hindi keywords in the first two lines, so it ranks for Hindi search.
+- A Movie Details / credits block (year, director, cast, rating).
+- A Related line naming Flick Movies Explanation, Filmaya or Razzu Bolta Hai.
+- A fair-use disclaimer.
+- No email address — a personal Gmail must never appear in a public description.
+- At most 5000 characters, the YouTube description limit.
+
+```bash
+python description_checker.py description.txt
+```
+
+Exit code is 0 when there are no failures (warnings are allowed), 1 when any check fails, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -70,6 +88,7 @@ Estimated time uses 3.3 words per second, the same rate as duration_estimator.py
 - `duration_estimator.py` — the duration estimator
 - `script_symbols_checker.py` — the symbols checker
 - `script_splitter.py` — the script splitter
+- `description_checker.py` — the description checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
