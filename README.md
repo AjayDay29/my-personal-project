@@ -80,6 +80,17 @@ python description_checker.py description.txt
 
 Exit code is 0 when there are no failures (warnings are allowed), 1 when any check fails, and 2 on a usage or file error.
 
+### 8. repetition_checker.py — Hindi script repetition checker
+
+Finds repeated phrases and sentences in a Hindi narration script, for the no-repetition rule: never repeat the same beat or phrase back-to-back. A phrase counts only when it repeats in the same sentence or in two neighbouring sentences, so words that simply recur across a whole script are not flagged. Whole repeated sentences are reported separately.
+
+```bash
+python repetition_checker.py script.txt
+python repetition_checker.py script.txt --min-words 5
+```
+
+Exit code is 0 when no repetition is found, 1 when repetition is found, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -89,6 +100,7 @@ Exit code is 0 when there are no failures (warnings are allowed), 1 when any che
 - `script_symbols_checker.py` — the symbols checker
 - `script_splitter.py` — the script splitter
 - `description_checker.py` — the description checker
+- `repetition_checker.py` — the repetition checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
