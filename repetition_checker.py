@@ -114,15 +114,17 @@ def find_repeated_phrases(sentences, min_words, repeated_sentence_keys):
 def find_repeated_sentences(sentences):
     """Find whole sentences that appear more than once.
 
-    Returns a dict: sentence -> sorted list of line numbers.
+    Returns a dict: sentence -> (count, sorted list of line numbers).
+    Count is the number of occurrences, not distinct lines, so a
+    sentence repeated twice on the same line is still caught.
     """
     occurrences = defaultdict(list)
     for line_no, sentence in sentences:
         key = " ".join(words_of(sentence))
         if key:
             occurrences[key].append(line_no)
-    return {s: sorted(set(lines)) for s, lines in occurrences.items()
-            if len(set(lines)) > 1}
+    return {s: (len(lines), sorted(set(lines)))
+            for s, lines in occurrences.items() if len(lines) > 1}
 
 
 def check_text(text, min_words):
@@ -149,10 +151,10 @@ def report(label, phrases, repeated_sentences):
     print(f"Found {total} repeated item(s):")
     if repeated_sentences:
         print("Repeated sentences:")
-        for sentence, lines in sorted(repeated_sentences.items(),
-                                      key=lambda kv: -len(kv[1])):
+        for sentence, (count, lines) in sorted(
+                repeated_sentences.items(), key=lambda kv: -kv[1][0]):
             shown = ", ".join(f"line {n}" for n in lines[:MAX_SHOW_PER_PHRASE])
-            print(f"  x{len(lines)} [{shown}]: {sentence}")
+            print(f"  x{count} [{shown}]: {sentence}")
     if phrases:
         print("Repeated phrases:")
         for phrase, (count, lines) in sorted(phrases.items(),
