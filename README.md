@@ -91,6 +91,21 @@ python repetition_checker.py script.txt --min-words 5
 
 Exit code is 0 when no repetition is found, 1 when repetition is found, and 2 on a usage or file error.
 
+### 9. upload_package_checker.py — YouTube upload package checker
+
+Checks a whole video upload package folder before it goes live, against the channel's locked formula. The folder must hold title.txt, description.txt, tags.txt (comma-separated) and thumbnail.jpg or thumbnail.png:
+
+- Title: 100 characters or fewer, no emojis, ends with "movie explanation".
+- Description: 5000 characters or fewer, at most 15 hashtags, a Movie Details block, a Related line, a fair-use disclaimer, and no email address.
+- Tags: 500 characters total or fewer (YouTube's documented limit); a tag over 30 characters is only a warning, because YouTube publishes no per-tag limit.
+- Thumbnail: a JPG or PNG image, 16:9, at least 1280 pixels wide. Image size is read without extra libraries.
+
+```bash
+python upload_package_checker.py package-dir/
+```
+
+Exit code is 0 when the package passes (warnings are allowed), 1 when any check fails, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -101,6 +116,7 @@ Exit code is 0 when no repetition is found, 1 when repetition is found, and 2 on
 - `script_splitter.py` — the script splitter
 - `description_checker.py` — the description checker
 - `repetition_checker.py` — the repetition checker
+- `upload_package_checker.py` — the upload package checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
