@@ -106,6 +106,22 @@ python upload_package_checker.py package-dir/
 
 Exit code is 0 when the package passes (warnings are allowed), 1 when any check fails, and 2 on a usage or file error.
 
+### 10. thumbnail_checker.py — YouTube thumbnail checker
+
+Checks one thumbnail image before it goes live, against YouTube's thumbnail rules:
+
+- Format: JPG, PNG, GIF or BMP — the formats YouTube accepts.
+- Shape: 16:9, the YouTube thumbnail shape.
+- Width: at least 640 pixels (YouTube's minimum); 1280x720 is the channel's upload size, anything bigger is only a warning.
+- File size: 2 MB or less — YouTube's thumbnail limit. A 95 MB 8K file fails this check, so the mistake from 9 Nov 2026 (a 95 MB thumbnail made before anyone checked the size) gets caught before the file is sent anywhere.
+
+```bash
+python thumbnail_checker.py thumbnail.jpg
+python thumbnail_checker.py thumbnail.png
+```
+
+Exit code is 0 when the thumbnail passes (warnings are allowed), 1 when any check fails, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -117,6 +133,7 @@ Exit code is 0 when the package passes (warnings are allowed), 1 when any check 
 - `description_checker.py` — the description checker
 - `repetition_checker.py` — the repetition checker
 - `upload_package_checker.py` — the upload package checker
+- `thumbnail_checker.py` — the thumbnail checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
