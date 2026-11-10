@@ -122,6 +122,25 @@ python thumbnail_checker.py thumbnail.png
 
 Exit code is 0 when the thumbnail passes (warnings are allowed), 1 when any check fails, and 2 on a usage or file error.
 
+### 11. thumbnail_sizer.py — YouTube thumbnail sizer
+
+Shrinks a thumbnail to a file YouTube will accept, without changing what it looks like. YouTube only accepts a thumbnail up to 2 MB, and 1280x720 is the size it shows — anything bigger only makes the file heavier:
+
+- A JPG already 1280 pixels wide or less and 2 MB or less is copied unchanged, so no quality is lost at all.
+- Otherwise it resizes to 1280 pixels wide (keeping the shape) and saves as JPG, trying the highest quality first and stepping down only until the file fits under 2 MB.
+- If even the lowest quality does not fit, it steps the width down to 960, then 640 (YouTube's minimum width).
+- The output is always JPG, because YouTube does not accept WebP as a thumbnail. The input file is never changed.
+
+Needs Pillow: `pip install Pillow`
+
+```bash
+python thumbnail_sizer.py thumbnail.png
+python thumbnail_sizer.py thumbnail.png upload-ready.jpg
+python thumbnail_sizer.py thumbnail.jpg --keep-size
+```
+
+Exit code is 0 when the output fits under the limit, 1 when it cannot be made to fit even at the smallest settings, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -134,6 +153,7 @@ Exit code is 0 when the thumbnail passes (warnings are allowed), 1 when any chec
 - `repetition_checker.py` — the repetition checker
 - `upload_package_checker.py` — the upload package checker
 - `thumbnail_checker.py` — the thumbnail checker
+- `thumbnail_sizer.py` — the thumbnail sizer
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
