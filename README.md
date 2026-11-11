@@ -141,6 +141,19 @@ python thumbnail_sizer.py thumbnail.jpg --keep-size
 
 Exit code is 0 when the output fits under the limit, 1 when it cannot be made to fit even at the smallest settings, and 2 on a usage or file error.
 
+### 12. voice_chunk_splitter.py — Hindi narration voice chunk splitter
+
+Splits a long Hindi script into voice chunks for teamsp.org, where one Alex voice generation takes at most 2500 characters. Sentences are never cut in half — splits happen on the danda and on . ? ! for Roman Hindi or English lines. Each chunk is saved as its own file (`<script>-voice-chunk01.txt`, and so on) with its character count, word count and estimated narration time printed:
+
+```bash
+python voice_chunk_splitter.py script.txt
+python voice_chunk_splitter.py script.txt --chars 2000 --out-dir chunks/
+```
+
+A single sentence longer than the limit gets a chunk of its own and is reported, because teamsp would cut it off — split such a sentence by hand before generating. Estimated time uses 3.3 words per second, the same rate as duration_estimator.py.
+
+Exit code is 0 on success and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -154,6 +167,7 @@ Exit code is 0 when the output fits under the limit, 1 when it cannot be made to
 - `upload_package_checker.py` — the upload package checker
 - `thumbnail_checker.py` — the thumbnail checker
 - `thumbnail_sizer.py` — the thumbnail sizer
+- `voice_chunk_splitter.py` — the voice chunk splitter
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
