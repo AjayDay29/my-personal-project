@@ -154,6 +154,35 @@ A single sentence longer than the limit gets a chunk of its own and is reported,
 
 Exit code is 0 on success and 2 on a usage or file error.
 
+### 13. silence_trimmer.py — narration silence trimmer
+
+Strips pauses longer than 0.05 seconds from a narration audio file,
+using the channel's locked silence-removal rule (ffmpeg silenceremove,
+start_periods=1, stop_periods=-1, -45dB). The input file is never
+changed — the trimmed audio is always written to a new file
+(`<name>-trimmed.mp3` by default), and an existing output file is
+never overwritten unless --force is given. Original and trimmed
+durations, the seconds removed and the length ratio are printed.
+Use the trimmed file for Shorts narration and keep the RAW file for
+video-dub sync, since trimming changes the timing.
+
+Tested 12 Nov 2026: a 2-minute excerpt of the Ritual narration went
+from 120.0s to 109.8s (0.92x); the music-backed 47 Ronin clone went
+from 70.6s to 70.4s (1.00x), because the background music fills the
+gaps, so there is almost no silence to remove.
+
+Needs ffmpeg and ffprobe on the PATH. MP3, WAV and M4A inputs are
+supported; MP3 output uses libmp3lame at 128k.
+
+```bash
+python silence_trimmer.py narration.mp3
+python silence_trimmer.py narration.mp3 narration-trimmed.mp3
+python silence_trimmer.py narration.mp3 --silence 0.1
+```
+
+Exit code is 0 on success, 1 when ffmpeg fails, and 2 on a usage
+or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -168,6 +197,7 @@ Exit code is 0 on success and 2 on a usage or file error.
 - `thumbnail_checker.py` — the thumbnail checker
 - `thumbnail_sizer.py` — the thumbnail sizer
 - `voice_chunk_splitter.py` — the voice chunk splitter
+- `silence_trimmer.py` — the silence trimmer
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
