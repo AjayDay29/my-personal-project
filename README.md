@@ -183,6 +183,32 @@ python silence_trimmer.py narration.mp3 --silence 0.1
 Exit code is 0 on success, 1 when ffmpeg fails, and 2 on a usage
 or file error.
 
+### 14. voice_chunks_checker.py — narration voice-chunks checker
+
+Checks a folder of numbered narration chunks is complete before
+joining them into one file: every chunk number in the sequence is
+present, no number is duplicated, and no chunk is suspiciously
+short (under 2 seconds usually means the generation failed).
+Each chunk's duration is read with ffprobe, and the total narration
+time is printed, so it can be checked against the script's
+estimated duration before the video edit starts.
+
+Tested 13 Nov 2026: Pearl Haven's 11 Alex parts passed complete
+(31:44 total, 2:36-3:07 per chunk) and Ready or Not's 9 parts
+passed complete (22:44 total). A test folder with part03 missing
+and a 0.5s part05 correctly failed with both problems listed.
+
+Needs ffprobe on the PATH. MP3, WAV and M4A files are checked;
+other files in the folder are ignored.
+
+```bash
+python voice_chunks_checker.py chunks-dir/
+python voice_chunks_checker.py chunks-dir/ --min-seconds 5
+```
+
+Exit code is 0 when the sequence is complete, 1 when a chunk is
+missing, duplicated or too short, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -198,6 +224,7 @@ or file error.
 - `thumbnail_sizer.py` — the thumbnail sizer
 - `voice_chunk_splitter.py` — the voice chunk splitter
 - `silence_trimmer.py` — the silence trimmer
+- `voice_chunks_checker.py` — the voice-chunks checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
