@@ -209,6 +209,39 @@ python voice_chunks_checker.py chunks-dir/ --min-seconds 5
 Exit code is 0 when the sequence is complete, 1 when a chunk is
 missing, duplicated or too short, and 2 on a usage or file error.
 
+### 15. shorts_package_checker.py — Filmy Station-format Short package checker
+
+Checks one Shorts package folder before it goes live, against the
+Filmy Station formula copied on 11 Nov 2026: one film, one mystery,
+about 2 minutes, a Devanagari question title starting with आखिर/क्या
+plus an emoji, 3-5 Shorts a week. The folder must hold script.txt
+and title.txt; a vertical thumbnail (thumbnail.jpg or thumbnail.png)
+is optional, because Shorts can reuse the long-form thumbnail or a
+video frame -- but if one is given it must be vertical 9:16:
+
+- Script: at most 2500 characters, so the Marcus voice fits in a
+  single teamsp.org generation; estimated narration 60-150 seconds
+  at 3.3 words per second (warn only outside that range).
+- Title: starts with "आखिर" or "क्या", 100 characters or fewer,
+  and contains an emoji (warn only).
+- Thumbnail (if present): JPG or PNG, vertical 9:16, at least 720
+  pixels wide, 2 MB or less; 1080x1920 is the Shorts size.
+
+```bash
+python shorts_package_checker.py shorts-package-dir/
+```
+
+Tested 14 Nov 2026: the real Not Without Hope Short passed with
+warnings (1,906 characters, about 2:03 narration, title "आखिर 4
+दोस्तों की नाव समुंदर में कैसे पलट गई" -- no emoji yet, no
+vertical thumbnail in the package). A too-long script with a
+non-question title correctly failed, the landscape v20 thumbnail
+(1280x720) correctly failed the 9:16 check, and a 1080x1920
+vertical thumbnail passed.
+
+Exit code is 0 when the package passes (warnings are allowed),
+1 when any check fails, and 2 on a usage or file error.
+
 ## Files
 
 - `script_cleaner.py` — the cleaner tool
@@ -225,6 +258,7 @@ missing, duplicated or too short, and 2 on a usage or file error.
 - `voice_chunk_splitter.py` — the voice chunk splitter
 - `silence_trimmer.py` — the silence trimmer
 - `voice_chunks_checker.py` — the voice-chunks checker
+- `shorts_package_checker.py` — the Short package checker
 - `example_input.txt` — a small sample script to try the tools on
 - `example_description.txt` — a sample description for the hashtag counter
 - `LICENSE` — MIT license
